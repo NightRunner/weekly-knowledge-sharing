@@ -3,28 +3,26 @@ package org.nr.wks.exception;
 public class ServiceException extends RuntimeException {
     private Integer code;
 
-    public ServiceException(Integer code) {
+    private ServiceException(Integer code) {
         super();
         this.code = code;
     }
 
-    public ServiceException(Integer code, String message) {
+    private ServiceException(Integer code, String message) {
         super(message);
         this.code = code;
     }
 
-    public static ServiceException createBeDivideNumberInvalid() {
-        //异常指定code
-        return new ServiceException(ErrorCodeConstants.ERROR_BE_DIVIDE_NUMBER_INVALID, " be divide number invalid");
+    public ServiceException(ServiceError serviceError, String message) {
+        this(serviceError.getCode(), message);
     }
 
-    public static ServiceException createDivideNumberInvalid() {
-        return new ServiceException(ErrorCodeConstants.ERROR_DIVIDE_NUMBER_INVALID, "divide number invalid");
+    public static ServiceException createDividendInvalid() {
+        return new ServiceException(ServiceError.DIVIDEND_INVALID, " dividend invalid");
     }
 
-    public static ServiceException createResultInvalid() {
-        return new ServiceException(ErrorCodeConstants.ERROR_RESULT_INVALID, "result not valid");
-
+    public static ServiceException createDivisorInvalid() {
+        return new ServiceException(ServiceError.DIVISOR_INVALID, "divisor invalid");
     }
 
     public Integer getCode() {

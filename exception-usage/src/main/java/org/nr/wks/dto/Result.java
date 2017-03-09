@@ -3,7 +3,7 @@ package org.nr.wks.dto;
 /**
  * Created by NightRunner on 2017-03-08.
  */
-public class AjaxResult implements java.io.Serializable {
+public class Result implements java.io.Serializable {
 
     /**
      * 为0为成功, 其他为错误
