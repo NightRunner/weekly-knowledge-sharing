@@ -5,9 +5,12 @@ package org.nr.wks.dto;
  */
 public class AjaxResult implements java.io.Serializable {
 
+    /**
+     * 为0为成功, 其他为错误
+     */
     private Integer code = 0;
 
-    private String message ;
+    private String message;
 
     public Integer getCode() {
         return code;

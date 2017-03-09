@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SampleController {
 
-    @RequestMapping("/api/divide/valid")
+    @RequestMapping("/api2/divide/valid")
     public Object plusValid(
             @RequestParam("number1") Double number1,
             @RequestParam("number2") Double number2,
@@ -17,6 +17,7 @@ public class SampleController {
         AjaxResult ajaxResult = new AjaxResult();
         try {
             if (number1.compareTo(0.0D) < 1) {
+                //抛出特定异常
                 throw ServiceException.createBeDivideNumberInvalid();
             }
 
@@ -32,6 +33,7 @@ public class SampleController {
             ajaxResult.setMessage("result is valid");
 
         } catch (ServiceException ex) {
+            //统一处理异常
             ajaxResult.setCode(ex.getCode());
             ajaxResult.setMessage(ex.getMessage());
         } catch (Exception ex) {

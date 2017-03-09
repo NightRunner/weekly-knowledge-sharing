@@ -14,6 +14,7 @@ public class ServiceException extends RuntimeException {
     }
 
     public static ServiceException createBeDivideNumberInvalid() {
+        //异常指定code
         return new ServiceException(ErrorCodeConstants.ERROR_BE_DIVIDE_NUMBER_INVALID, " be divide number invalid");
     }
 
