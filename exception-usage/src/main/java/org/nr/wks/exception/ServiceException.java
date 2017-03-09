@@ -3,11 +3,6 @@ package org.nr.wks.exception;
 public class ServiceException extends RuntimeException {
     private Integer code;
 
-    private ServiceException(Integer code) {
-        super();
-        this.code = code;
-    }
-
     private ServiceException(Integer code, String message) {
         super(message);
         this.code = code;

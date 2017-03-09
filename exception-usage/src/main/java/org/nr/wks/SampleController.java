@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("api") //@RestController与@Controller的区别为 所有@RequestMapping 默认加入 @ResponseBody
+@RestController //@RestController与@Controller的区别为 所有@RequestMapping 默认加入 @ResponseBody
 public class SampleController {
 
     @RequestMapping("v0/divide/valid")
