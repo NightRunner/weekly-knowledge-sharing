@@ -8,14 +8,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("api") //与@Controller的区别为 所有@RequestMapping 默认加入 @ResponseBody
+@RestController("api") //@RestController与@Controller的区别为 所有@RequestMapping 默认加入 @ResponseBody
 public class SampleController {
 
-    @RequestMapping("/api/v1/divide/valid")
+    @RequestMapping("v0/divide/valid")
+    public Object v0DivideValid(
+            @RequestParam Double dividend,
+            @RequestParam Double divisor,
+            @RequestParam Double result) {
+
+        Result ajaxResult = new Result();
+
+        try {
+
+            if (dividend.compareTo(0.0D) < 1) {
+                ajaxResult.setMessage("dividend invalid");
+                ajaxResult.setCode(1);
+                return ajaxResult;
+            }
+
+            if (divisor.compareTo(0.0D) < 1) {
+                ajaxResult.setMessage("divisor invalid");
+                ajaxResult.setCode(2);
+                return ajaxResult;
+            }
+
+            if (!new Double(dividend / divisor).equals(result)) {
+                ajaxResult.setMessage("result invalid");
+                ajaxResult.setCode(3);
+                return ajaxResult;
+            }
+
+            ajaxResult.setCode(0);
+            ajaxResult.setMessage("result is valid");
+
+        } catch (Exception ex) {
+            ajaxResult.setCode(-1);
+            ajaxResult.setMessage("internal error");
+        }
+
+        return ajaxResult;
+    }
+
+    @RequestMapping("v1/divide/valid")
     public Object v1DivideValid(
-            @RequestParam("dividend") Double dividend,
-            @RequestParam("divisor") Double divisor,
-            @RequestParam("result") Double result) {
+            @RequestParam Double dividend,
+            @RequestParam Double divisor,
+            @RequestParam Double result) {
 
         Result ajaxResult = new Result();
 
@@ -52,76 +91,6 @@ public class SampleController {
         }
 
         return ajaxResult;
-    }
-
-    @RequestMapping("/api/v2/divide/valid")
-    public Object v2DivideValid(
-            @RequestParam("dividend") Double dividend,
-            @RequestParam("divisor") Double divisor,
-            @RequestParam("result") Double result) {
-
-        Result ajaxResult = new Result();
-
-        try {
-
-            divideValid(dividend, divisor, result);
-
-            ajaxResult.setCode(0);
-            ajaxResult.setMessage("result is valid");
-
-        } catch (ServiceException ex) {
-            //统一处理异常
-            ajaxResult.setCode(ex.getCode());
-            ajaxResult.setMessage(ex.getMessage());
-
-        } catch (Exception ex) {
-            ajaxResult.setCode(ServiceError.INTERNAL_ERROR.getCode());
-            ajaxResult.setMessage(ex.getMessage());
-        }
-
-        return ajaxResult;
-    }
-
-    @RequestMapping("/api/v3/divide/valid")
-    public Object v3DivideValid(
-            @RequestParam("dividend") Double dividend,
-            @RequestParam("divisor") Double divisor,
-            @RequestParam("result") Double result) {
-
-        Result ajaxResult = new Result();
-
-        try {
-
-            divideValid(dividend, divisor, result);
-
-            ajaxResult.setCode(0);
-            ajaxResult.setMessage("result is valid");
-
-        } catch (ServiceException ex) {
-            //统一处理异常
-            ajaxResult.setCode(ex.getCode());
-            ajaxResult.setMessage(ex.getMessage());
-
-        } catch (Exception ex) {
-            ajaxResult.setCode(ServiceError.INTERNAL_ERROR.getCode());
-            ajaxResult.setMessage(ex.getMessage());
-        }
-
-        return ajaxResult;
-    }
-
-    private void divideValid(Double dividend, Double divisor, Double result) {
-        if (dividend.compareTo(0.0D) < 1) {
-            throw ServiceException.createDividendInvalid();
-        }
-
-        if (divisor.compareTo(0.0D) < 1) {
-            throw ServiceException.createDivisorInvalid();
-        }
-
-        if (!new Double(dividend / divisor).equals(result)) {
-            throw new InvalidResultServiceException("invalid result");
-        }
     }
 
 }
