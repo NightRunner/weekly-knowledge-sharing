@@ -21,6 +21,9 @@ public class SampleController {
 
         try {
 
+            /**
+             *现有代码对参数非法的处理方式
+             */
             if (dividend.compareTo(0.0D) < 1) {
                 ajaxResult.setMessage("dividend invalid");
                 ajaxResult.setCode(1);
